@@ -30,7 +30,7 @@ def most_weekend_birthdays(friends, conversation_date):
         elif winner['weekends_count'] < friend['weekends_count']:
             winner = friend
         elif winner['weekends_count'] == friend['weekends_count']:
-            if datetime.date(*winner['birthday']) > datetime.date(*friend['birthday']):
+            if datetime.date(*winner['birthday']) < datetime.date(*friend['birthday']):
                 winner = friend
             else:
                 pass
