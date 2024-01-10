@@ -1,4 +1,5 @@
 import datetime
+import calendar
 
 
 def most_weekend_birthdays(friends, conversation_date):
@@ -18,6 +19,8 @@ def most_weekend_birthdays(friends, conversation_date):
         while True:
             year += 1
 
+            if not calendar.isleap(year) and day == 29:
+                day -= 1
             if datetime.date(year, month, day) < datetime.date(*conversation_date):
                 if datetime.date(year, month, day).weekday() > 4:
                     friend['weekends_count'] += 1
