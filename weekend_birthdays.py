@@ -1,36 +1,41 @@
 import datetime
-import calendar
 
 
 def most_weekend_birthdays(friends, conversation_date):
     conversation_date = [int(i) for i in conversation_date.split('-')]
-    loser_that_wins = ['a', [0, 0]]
-    for friend in friends:
-        name = friend[0]
-        date_of_birth = [int(i) for i in friend[1].split('-')]
-        date = date_of_birth
-        year = date[0] + 1
-        weekends = 0
+    friends_data = []
+    winner = None
+
+    for i in range(len(friends)):
+        friends_data.append({'name': friends[i][0], 'birthday': [int(i) for i in friends[i][1].split("-")], 'weekends_count': 0})
+
+    for friend in friends_data:
+        friend_birthday = friend['birthday']
+        year = friend_birthday[0]
+        month = friend_birthday[1]
+        day = friend_birthday[2]
+
         while True:
-            date[0] = year
-            if date[1] > conversation_date[1]:
+            year += 1
+
+            if datetime.date(year, month, day) < datetime.date(*conversation_date):
+                if datetime.date(year, month, day).weekday() > 4:
+                    friend['weekends_count'] += 1
+            else:
                 break
-            elif date[1] == conversation_date[1] and date[2] > conversation_date[2]:
-                break
-            if datetime.date(*date).weekday() > 4:
-                weekends += 1
-            if year <  conversation_date[0]:
-                year += 1
-                continue
-            break
-        if loser_that_wins[1][0] < weekends:
-            loser_that_wins = [name, [weekends, date_of_birth]]
-        elif loser_that_wins[1][0] == weekends:
-            if loser_that_wins[1][1] > date_of_birth:
-                loser_that_wins = [name, [weekends, date_of_birth]]
-    return loser_that_wins[0]
+
+    for friend in friends_data:
+        if winner is None:
+            winner = friend
+        elif winner['weekends_count'] < friend['weekends_count']:
+            winner = friend
+        elif winner['weekends_count'] == friend['weekends_count']:
+            if datetime.date(*winner['birthday']) > datetime.date(*friend['birthday']):
+                winner = friend
+            else:
+                pass
+
+    return winner['name']
 
 
-
-
-print(most_weekend_birthdays([("Alice", "2010-11-10"), ("Bob", "2010-11-23")], "2022-12-31"))
+print(most_weekend_birthdays([("Steve", "2010-11-18"), ("Dave", "2010-11-22")], "2022-12-31"))
