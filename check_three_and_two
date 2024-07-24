@@ -1,0 +1,11 @@
+def check_three_and_two(array):
+    count_a = array.count("a")
+    count_b = array.count("b")
+    count_c = array.count("c")
+    
+    count_array = [count_a, count_b, count_c]
+    
+    if 3 in count_array and 2 in count_array:
+        return True
+    return False
+      
