@@ -1,0 +1,4 @@
+def friend(x):
+    filtered = [name for name in x if len(name) == 4]
+    
+    return filtered
